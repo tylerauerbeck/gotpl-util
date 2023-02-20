@@ -1,9 +1,7 @@
 FROM cgr.dev/chainguard/go:1.20 as base
 
-RUN go install -v github.com/tsg/gotpl@latest
-
-FROM cgr.dev/chainguard/static:latest
-
-COPY --from=base /root/go/bin/gotpl /usr/local/bin/gotpl
+RUN go install -v github.com/tsg/gotpl@latest  && \
+    mkdir /usr/local/bin && \
+    cp /root/go/bin/gotpl /usr/local/bin/gotpl
 
 ENTRYPOINT ["/usr/local/bin/gotpl"]
